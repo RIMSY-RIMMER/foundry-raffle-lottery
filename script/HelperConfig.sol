@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 // import mock contract from chainlink library
-import {VRFCoordinatorV2Mock} from "src/test/VRFCoordinatorV2Mock.sol";
+import {VRFCoordinatorV2Mock} from "src/mocks/VRFCoordinatorV2Mock.sol";
 
 // HelperConfig contract which will help to set behavior of the Raffle contract on ddifferent networks
 contract HelperConfig {
@@ -36,6 +36,7 @@ contract HelperConfig {
     constructor() {
         chainIdNetworkConfig[5] = getGoerliEthConfig();
         chainIdNetworkConfig[31337] = getAnvilEthConfig();
+        chainIdNetworkConfig[1337] = getGanacheEthConfig();
         // sets `activeNetworkConfig` variables to `NetworkConfig` struct
         // in the `chainIdNetworkConfig` mapping for the current chainId
         // `block.chainid` --> global object in Solidity
@@ -70,6 +71,21 @@ contract HelperConfig {
         returns (NetworkConfig memory anvilNetworkConfig)
     {
         anvilNetworkConfig = NetworkConfig({
+            vrfCoordinator: address(vrfCoordinatorV2MockAddress), // mock
+            entranceFee: 25e15, //2500000000000000000, // 0.25 ETH
+            gasLane: 0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15,
+            subscriptionId: 0,
+            callbackGasLimit: 500000, // 500.000 Gas
+            interval: 30
+        });
+    }
+
+    function getGanacheEthConfig()
+        internal
+        view
+        returns (NetworkConfig memory ganacheNetworkConfig)
+    {
+        ganacheNetworkConfig = NetworkConfig({
             vrfCoordinator: address(vrfCoordinatorV2MockAddress), // mock
             entranceFee: 25e15, //2500000000000000000, // 0.25 ETH
             gasLane: 0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15,

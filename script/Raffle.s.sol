@@ -10,7 +10,7 @@ import {Raffle} from "src/Raffle.sol";
 // import HelperConfig contract from script folder
 import {HelperConfig} from "script/HelperConfig.sol";
 // importing mock --> we need to use mock on anvil network
-import {VRFCoordinatorV2Mock} from "src/test/VRFCoordinatorV2Mock.sol";
+import {VRFCoordinatorV2Mock} from "src/mocks/VRFCoordinatorV2Mock.sol";
 
 // this contract will deploy Raffle contract
 // contract can use function from Script and HelperConfig contracts
