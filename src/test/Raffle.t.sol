@@ -8,22 +8,15 @@ import {Raffle} from "src/Raffle.sol";
 
 // test contract, where we will test Raffle contract
 contract RaffleTest is Test {
-    // state variable raffle
     Raffle raffle;
-    // state variable vrfCoordinator
     address vrfCoordinator;
-    // state variable entranceFee
     uint256 entranceFee;
-    // state variable gasLane
     bytes32 gasLane;
-    // state variable subscriptionId
     uint64 subscriptionId;
-    // state variable callbackGasLimit
     uint32 callbackGasLimit;
-    // state variable interval
     uint256 interval;
 
-    // function setUp will be called before each test
+    // function setUp will run before each test case
     function setUp() public {
         // creating a new instance of Raffle contract
         raffle = new Raffle(
@@ -36,6 +29,38 @@ contract RaffleTest is Test {
         );
     }
 
-    // test function to test the Raffle contract
-    function testRaffle() public {}
+    /*  test of constructor function
+        1. Raffle state test --> initialize the Raffle correctly
+        2. getting the Raffle State 
+        3. assertTrue
+        test if internval is set correctly
+        1. getting interval --> getter function
+        2. assert (interval should equal to interval in setUp function)
+     */
+    function testConstructor() public {}
+
+    /*  test of enterRaffle function
+        it reverts when you try to enter the raffle with an amount less than the entrance fee
+     */
+    function testEnterRaffleRevertsWhenAmountLessThanEntranceFee() public {}
+
+    /*  records player when they enter the raffle
+        we need raffle entrance fee which we use to enter the raffle
+        entter raffel with a value of the entrance fee
+      */
+    function testRecordsPlayerWhenTheyEnterRaffle() public {}
+
+    /* test if emit event is called when player enters the raffle
+        we need to emit event when player enters the raffle
+        we need to call enterRaffle function
+        we need to check if event is emitted
+     */
+    function testEmitsEventWhenPlayerEntersRaffle() public {}
+
+    /*  make sure that it does not allowed entrance, when the Raffle is Calculating
+        need to get Raffle to closed state
+        need to make  to check up keep returns true
+        faundry cheats - becouse now each interval is 30 seconds
+     */
+    function testDoesNotAllowEntranceWhenRaffleIsCalculating() public {}
 }
