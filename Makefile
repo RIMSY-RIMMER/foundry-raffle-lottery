@@ -34,7 +34,7 @@ anvil :; anvil -m 'test test test test test test test test test test test junk'
 deploy-goerli :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url ${GOERLI_RPC_URL}  --private-key ${PRIVATE_KEY} --broadcast --verify --etherscan-api-key ${ETHERSCAN_API_KEY}  -vvvv
 
 # This is the private key of account from the mnemonic from the "make anvil" command
-deploy-anvil :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url http://localhost:8545  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast -vvvv
+deploy-anvil :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url http://localhost:8545  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast -vvvvv
 
 # This is the private key of account from the mnemonic from the "make anvil" command
 deploy-ganache :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url http://127.0.0.1:7545  --private-key 0xa308cc518a992f793f79c51b230f21d8280300850d4dbd77d1ce6781f8eedd14 --broadcast -vvvv
