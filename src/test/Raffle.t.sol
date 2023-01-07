@@ -40,7 +40,7 @@ contract RaffleTest is Test, HelperConfig {
 
         console.logAddress(address(vrfCoordinator));
         console.logUint(entranceFee);
-        emit log_uint(entranceFee);
+        emit log_uint(helperConfig.getEntranceFee());
         emit log_bytes32(gasLane);
         emit log_uint(subscriptionId);
         emit log_uint(callbackGasLimit);
