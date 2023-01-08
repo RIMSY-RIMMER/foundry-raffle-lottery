@@ -9,7 +9,7 @@
 
 pragma solidity ^0.8.17;
 
-error Raffle__NotEnoughEtherSent();
+// error Raffle__NotEnoughEtherSent();
 error Raffle__TransferFailed();
 error Raffle__RaffleNotOpen();
 error Raffle__UpkeepNotNeeded(
@@ -103,6 +103,8 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
         s_lastTimeStamp = block.timestamp;
         i_interval = interval;
     }
+
+    error Raffle__NotEnoughEtherSent();
 
     function enterRaffle() public payable {
         // Check if the user has sent enough ether

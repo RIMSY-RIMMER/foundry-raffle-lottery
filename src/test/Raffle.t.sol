@@ -8,14 +8,12 @@ import {MockVRFCoordinatorV2} from "src/mocks/VRFCoordinatorV2Mock.sol";
 
 // test contract, where we will test Raffle contract
 contract RaffleTest is Test, HelperConfig {
-    // mock address of the vrfCoordinator
-    // VRFCoordinatorV2Mock public vrfCoordinator;
-    // create raffle contract with chainIdNetworkConfig[31337]
-    HelperConfig public helperConfig;
-    Raffle public raffle;
-    MockVRFCoordinatorV2 public vrfCoordinator;
+    HelperConfig helperConfig;
+    Raffle raffle;
+    MockVRFCoordinatorV2 vrfCoordinator;
 
-    // setting vrfCoordinator variable to adress from Helper Config function getVrfCoordinator
+    address alice = address(0x1337);
+    address bob = address(0x133702);
 
     // address vrfCoordinator = new VRFCoordinatorV2Mock()
     uint256 entranceFee = 25e15;
@@ -27,6 +25,8 @@ contract RaffleTest is Test, HelperConfig {
 
     // function setUp will run before each test case
     function setUp() public {
+        vm.label(alice, "Alice");
+        vm.label(bob, "Bob");
         helperConfig = new HelperConfig();
         vrfCoordinator = new MockVRFCoordinatorV2();
         raffle = new Raffle(
@@ -37,22 +37,9 @@ contract RaffleTest is Test, HelperConfig {
             callbackGasLimit,
             interval
         );
-
-        console.logAddress(address(vrfCoordinator));
-        console.logUint(entranceFee);
-        emit log_uint(helperConfig.getEntranceFee());
-        emit log_bytes32(gasLane);
-        emit log_uint(subscriptionId);
-        emit log_uint(callbackGasLimit);
-        emit log_uint(interval);
-        /*      vrfCoordinator = helperConfig.getVrfCoordinator();
-        entranceFee = helperConfig.getEntranceFee();
-        gasLane = helperConfig.getGasLane();
-        subscriptionId = helperConfig.getSubscriptionId();
-        callbackGasLimit = helperConfig.getCallbackGasLimit();
-        interval = helperConfig.getInterval(); */
     }
 
+    /* -------------- Constructor Test --------------*/
     /*  test of constructor function
         1. Raffle state test --> initialize the Raffle correctly
         2. getting the Raffle State 
@@ -63,22 +50,16 @@ contract RaffleTest is Test, HelperConfig {
      */
     // function testConstructor() public {}
 
-    /*  test of enterRaffle function
-        it reverts when you try to enter the raffle with an amount less than the entrance fee
-     */
+    /* -------------- Functions Tests --------------*/
+    // it reverts when you try to enter the raffle with an amount less than the entrance fee
     function testRevertsWhenNotEnoughEth() public {
-        // we will use foundry cheatcodes --> expectRevert
-        // enter Raffle with a value less than the entrance fee
-        // uint256 i_entranceFee = raffle.getEntranceFee();
         uint256 i_entranceFee = raffle.getEntranceFee();
+        // Expects an error on next call
+        vm.expectRevert(Raffle.Raffle__NotEnoughEtherSent.selector);
         raffle.enterRaffle{value: i_entranceFee - 1}();
-        vm.expectRevert("Raffle__NotEnoughEtherSent");
     }
 
-    /*  records player when they enter the raffle
-        we need raffle entrance fee which we use to enter the raffle
-        entter raffel with a value of the entrance fee
-      */
+    // test that array will records player when they enter the raffle
     function testRecordsPlayerWhenTheyEnterRaffle() public {
         // entrance fee is 0.1 ETH or bigger than that
         uint256 i_entranceFee = raffle.getEntranceFee();
@@ -86,15 +67,28 @@ contract RaffleTest is Test, HelperConfig {
         raffle.enterRaffle{value: i_entranceFee}();
         // assert that that function getNumPlayers returns 1
         assertTrue(raffle.getNumPlayers() == 1);
-        emit log_uint(i_entranceFee);
     }
 
-    /* test if emit event is called when player enters the raffle
-        we need to emit event when player enters the raffle
-        we need to call enterRaffle function
-        we need to check if event is emitted
-     */
-    // function testEmitsEventWhenPlayerEntersRaffle() public {}
+    /*     // test if it reverts when you try to enter the raffle when the raffle is calculating
+    function testRevertsWhenRaffleIsCalculating() public {
+        // Expects an error on next call
+        vm.expectRevert();
+        // we need to get raffle to calculating state
+        // we need to make sure that up keep returns true
+        raffle.enterRaffle{value: 1}();
+    } */
+
+    /* -------------- Emit Event --------------*/
+    // test if emit event is called when player enters the raffle
+    // emits RaffleEnter event if entered to index player(s) address
+    // we need to declare event locally
+    /*     event RaffleEnter(address indexed player);
+
+    function testEmitsEventWhenPlayerEntersRaffle() public {
+        vm.expectEmit(true, false, false, true);
+        emit RaffleEnter();
+        raffle.enterRaffle{value: entranceFee}();
+    } */
 
     /*  make sure that it does not allowed entrance, when the Raffle is Calculating
         need to get Raffle to closed state
