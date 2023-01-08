@@ -6,12 +6,7 @@ pragma solidity ^0.8.17;
 
 // HelperConfig contract which will help to set behavior of the Raffle contract on ddifferent networks
 contract HelperConfig {
-    // state variable mock address
-    // defines: `vrfCoordinatorMock` variable
-    // as an instance of the VRFCoordinatorV2Mock contract
     // VRFCoordinatorV2Mock vrfCoordinatorV2Mock;
-    // this line defines the `vrfCoordinatorV2MockAddress` variable
-    // as the address of the `vrfCoordinatorV2Mock` contract
     // address vrfCoordinatorV2MockAddress = address(vrfCoordinatorV2Mock);
 
     // state variable which will store the NetworkConfig for the active network
@@ -98,27 +93,22 @@ contract HelperConfig {
     } */
 
     /* -------------- View / Pure getter functions -------------- */
-    // want to see the activeNetworkConfig
     function getActiveNetworkConfig() external view returns (NetworkConfig memory) {
         return activeNetworkConfig;
     }
 
-    // want to see the NetworkConfig for the goerli network
     function getGoerliNetworkConfig() external pure returns (NetworkConfig memory) {
         return getGoerliEthConfig();
     }
 
-    // want to see the NetworkConfig for the anvil network
-    function getAnvilNetworkConfig() external view returns (NetworkConfig memory) {
+    /*     function getAnvilNetworkConfig() external view returns (NetworkConfig memory) {
         return getAnvilEthConfig();
-    }
+    } */
 
-    // want to see the NetworkConfig for the ganache network
     /*     function getGanacheNetworkConfig() external view returns (NetworkConfig memory) {
         return getGanacheEthConfig();
     } */
 
-    // want to see the NetworkConfig for the current network
     function getNetworkConfig(uint256 chainId) external view returns (NetworkConfig memory) {
         return chainIdNetworkConfig[chainId];
     }

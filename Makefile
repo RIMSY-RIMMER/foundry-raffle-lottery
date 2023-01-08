@@ -37,6 +37,6 @@ deploy-goerli :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-
 deploy-anvil :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url http://localhost:8545  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast -vvvvv
 
 # This is the private key of account from the mnemonic from the "make anvil" command
-deploy-ganache :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url http://127.0.0.1:7545  --private-key 0xa308cc518a992f793f79c51b230f21d8280300850d4dbd77d1ce6781f8eedd14 --broadcast -vvvv
+deploy-ganache :; @forge script script/${contract}.s.sol:Deploy${contract} --rpc-url http://127.0.0.1:7545  --private-key {GANACHE ACCOUNT PRIVATE KEY} --broadcast -vvvv
 
 deploy-all :; make deploy-${network} contract=APIConsumer && make deploy-${network} contract=KeepersCounter && make deploy-${network} contract=PriceFeedConsumer && make deploy-${network} contract=VRFConsumerV2

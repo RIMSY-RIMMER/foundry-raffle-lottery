@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-// making solidity script which will implement the Raffle contract
-// Compare this snippet from src/Raffle.sol:
 pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
-// Test: becouse of emit log functions
+// Test: becouse of emit log functions --> test
 import "forge-std/Test.sol";
 import {Raffle} from "src/Raffle.sol";
 import {HelperConfig} from "script/HelperConfig.sol";
@@ -24,8 +22,9 @@ contract DeployRaffle is Script, HelperConfig, Test {
             bytes32 gasLane,
             uint64 subscriptionId,
             uint32 callbackGasLimit,
-            uint256 interval // calling activeNetworkConfig function from HelperConfig contract // returns which network we are on and config for that network
-        ) = helperConfig.activeNetworkConfig();
+            uint256 interval
+        ) = // calling activeNetworkConfig function from HelperConfig contract // returns which network we are on and config for that network
+            helperConfig.activeNetworkConfig();
 
         // if we are on anvil network we need to deploy VRFCoordinatorV2Mock contract
         if (vrfCoordinator == address(0)) {
